@@ -8,5 +8,24 @@ import './css/styles.css';
 import './images/turing-logo.png'
 import './images/bikes.jpg'
 
+import { arrFetch } from '../dist/api';
 
+
+export const usersData = {
+  user: null,
+  trips: [],
+  destination: [],
+  travelers: []
+}
+
+
+window.addEventListener('load', () => {
+  Promise.all(arrFetch)
+  .then(results => {
+    usersData.travelers = results[0]
+    usersData.trips = results[1]
+    usersData.destination = results[2]
+    console.log(results)
+  })
+})
 console.log('This is the JavaScript entry file - your code begins here.');
