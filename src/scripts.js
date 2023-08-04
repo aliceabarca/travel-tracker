@@ -13,9 +13,9 @@ import { arrFetch } from '../dist/api';
 
 export const usersData = {
   user: null,
+  travelers: [],
   trips: [],
-  destination: [],
-  travelers: []
+  destinations: []
 }
 
 
@@ -24,7 +24,7 @@ window.addEventListener('load', () => {
   .then(results => {
     usersData.travelers = results[0]
     usersData.trips = results[1]
-    usersData.destination = results[2]
+    usersData.destinations = results[2]
     console.log(results)
   })
 })
