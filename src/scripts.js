@@ -10,11 +10,29 @@ import './images/bikes.jpg'
 
 import { arrFetch } from '../dist/api';
 
+import { calculateTripsCost, filteredTrips } from './travelData';
+import { cards, usersDestination } from '../dist/domUpdates';
+
+// global
+
+let currentTraveler = {
+  id: 2,
+  name: "Rachael Vaughten",
+  travelerType: "thrill-seeker"
+}
+
+let currentTravelerTrips;
 
 export const usersData = {
   user: null,
   travelers: [],
-  trips: [],
+  trips: {
+    all: [],
+    past: [],
+    pending: [],
+    upcoming: [],
+    tripsThisYear: [],
+  },
   destinations: []
 }
 
@@ -22,10 +40,16 @@ export const usersData = {
 window.addEventListener('load', () => {
   Promise.all(arrFetch)
   .then(results => {
-    usersData.travelers = results[0]
-    usersData.trips = results[1]
+    const allUsersTrips = results[1].trips
+    const tripsDestinations = results[2].destinations
+    // usersData.travelers = results[0]
+    usersData.trips = filteredTrips(currentTraveler.id, allUsersTrips)
     usersData.destinations = results[2]
-    console.log(results)
+    const __ = calculateTripsCost(usersData.trips.all, tripsDestinations)
+    console.log(usersData)
+    // currentTravelerTrips = usersTrip(currentTraveler.id, usersData.trips)
+    // cards(currentTravelerTrips)
+    // usersDestination(trips, destinations)
   })
 })
 console.log('This is the JavaScript entry file - your code begins here.');
