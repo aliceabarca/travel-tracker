@@ -28,16 +28,3 @@ export const setApiData =(trips) => {
     "Content-Type": "application/json"
     }
 }
-
-export const fetchDestination = (id, estimatedLodgingCost, estimatedFlightCost, image, alt) => {
-  return fetch(`http://localhost:3001/api/v1/destinations`), {
-    method: 'POST',
-    body: JSON.stringify({
-      id,
-      estimatedLodgingCost,
-      estimatedFlightCost,
-      image,
-      alt,
-    })
-  }
-}

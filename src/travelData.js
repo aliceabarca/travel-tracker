@@ -55,6 +55,6 @@ export function calculateTripsCost(usersTrip, destinations) {
   });
 
   const agentsFee = costOfAllTrips * travelFeePrecentage;
-
+  
   return agentsFee;
 }

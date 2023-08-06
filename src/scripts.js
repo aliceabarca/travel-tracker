@@ -11,21 +11,23 @@ import './images/bikes.jpg';
 import { arrFetch } from '../dist/api';
 
 import { calculateTripsCost, filteredTrips } from './travelData';
-import { displayCards, displayCost, displayPastTrips, displayPendingTrips, displayTripCards, displayUsersName, usersDestination } from '../dist/domUpdates';
+import { displayCards, displayCost, displayPastTrips, displayPendingTrips, displayTripCards, displayUsersName, estimatedCostForNewTrip, usersDestination } from '../dist/domUpdates';
 
 // query selector
-export const estimatedCostButton = document.getElementById('est-button');
+// export const estimatedCostButton = document.getElementById('est-cost');
 export const upcomingTripsButton = document.getElementById('upcoming');
 export const pendingTripsButton = document.getElementById('pending');
 export const pastTripsButton = document.getElementById('past');
 export const totalSpentThisYear = document.getElementById('spent-this-year');
 export const cardContainer = document.querySelector('.card-container')
 export const deskDrop = document.querySelector('#destination-drop')
-
+export const errorMessage = document.querySelector('.error-message')
+export const travelers = document.querySelector('.number-of-travelers')
+export const durationOfTrip = document.querySelector('.trips-duration')
+export const chooseDestination = document.querySelector('#destination-drop')
+const estimatedCost = document.querySelector('.estimate-cost')
 // add event listeners
-// estimatedCostButton.addEventListener('click', () => {
 
-// });
 // upcomingTripsButton.addEventListener('click', () => {
 //   pastTripsButton.classList.add('active')
 //   upcomingTripsButton.classList.remove('active')
@@ -40,6 +42,30 @@ pastTripsButton.addEventListener('click', () => {
   displayTripCards(usersData.trips.past, usersData.destinations)
 });
 
+deskDrop.addEventListener('change', () => {
+  estimatedCost.innerHTML = `${estimatedCostForNewTrip(durationOfTrip.value, Number(travelers.value), usersData.destinations.find(destination => {
+    return destination.destinations === chooseDestination.value
+  }))}`
+  
+})
+
+
+travelers.addEventListener('change', () => {
+  estimatedCost.innerHTML = `${estimatedCostForNewTrip(durationOfTrip.value, Number(travelers.value), usersData.destinations.find(destination => {
+    return destination.destinations === chooseDestination.value
+  }))}`
+  
+})
+
+
+durationOfTrip.addEventListener('change', () => {
+  estimatedCost.innerHTML = `${estimatedCostForNewTrip(durationOfTrip.value, Number(travelers.value), usersData.destinations.find(destination => {
+    return destination.destinations === chooseDestination.value
+  }))}`
+  
+})
+
+
 
 // global
 
@@ -50,7 +76,7 @@ let currentTraveler = {
 };
 
 let currentTravelerTrips;
-export let travelFeePrecentage = 0.1;
+export let travelFeePrecentage = 1.1;
 
 export const usersData = {
   user: {
