@@ -20,7 +20,9 @@ export function filteredTrips(userId, allTrips) {
     const todaysDate = new Date().getTime();
     return tripDate > todaysDate && trip.status === 'approved';
   });
-
+  // console.log('past', pastTrips)
+  // console.log('pending', pendingTrips)
+  // console.log()
   return {
     all: userTrips,
     pending: pendingTrips,

@@ -40,13 +40,14 @@
       </label>
     </div>
     <h4 class-="error-message hidden">Please select appropriate inputs!</h4>
-    <button class="estimate-cost">Calculate Estimated Cost</button>
+    <button id="est-cost" class="estimate-cost">Calculate Estimated Cost</button>
   </section>
   <section class="trips">
     <div class="tabs">
       <button class="trip-buttons" id="upcoming">Upcoming Trips</button>
       <button class="trip-buttons" id="pending">Pending Trips</button>
       <button class="trip-buttons" id="past">Past Trips</button>
+      <p>Total Spent This Year: <span id="spent-this-year">0.00</span></p>
     </div>
     <h5 id="trip-type">UPCOMING TRIPS</h5>
     <div class="card-container"></div>

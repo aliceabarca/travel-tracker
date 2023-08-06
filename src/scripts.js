@@ -11,12 +11,40 @@ import './images/bikes.jpg';
 import { arrFetch } from '../dist/api';
 
 import { calculateTripsCost, filteredTrips } from './travelData';
-import { cards, usersDestination } from '../dist/domUpdates';
+import { displayCards, displayCost, displayPastTrips, displayPendingTrips, displayTripCards, displayUsersName, usersDestination } from '../dist/domUpdates';
+
+// query selector
+export const estimatedCostButton = document.getElementById('est-button');
+export const upcomingTripsButton = document.getElementById('upcoming');
+export const pendingTripsButton = document.getElementById('pending');
+export const pastTripsButton = document.getElementById('past');
+export const totalSpentThisYear = document.getElementById('spent-this-year');
+export const cardContainer = document.querySelector('.card-container')
+export const deskDrop = document.querySelector('#destination-drop')
+
+// add event listeners
+// estimatedCostButton.addEventListener('click', () => {
+
+// });
+// upcomingTripsButton.addEventListener('click', () => {
+//   pastTripsButton.classList.add('active')
+//   upcomingTripsButton.classList.remove('active')
+//   displayCost(tripsCost);
+//   displayCards()
+// });
+pendingTripsButton.addEventListener('click', () => {
+  displayTripCards(usersData.trips.pending, usersData.destinations)
+  // console.log('destination', usersData.destinations)
+});
+pastTripsButton.addEventListener('click', () => {
+  displayTripCards(usersData.trips.past, usersData.destinations)
+});
+
 
 // global
 
 let currentTraveler = {
-  id: 2,
+  id: 30,
   name: 'Rachael Vaughten',
   travelerType: 'thrill-seeker',
 };
@@ -25,7 +53,11 @@ let currentTravelerTrips;
 export let travelFeePrecentage = 0.1;
 
 export const usersData = {
-  user: null,
+  user: {
+    id: 2,
+    name: 'Rachael Vaughten',
+    travelerType: 'thrill-seeker',
+  },
   travelers: [],
   trips: {
     all: [],
@@ -40,14 +72,32 @@ window.addEventListener('load', () => {
   Promise.all(arrFetch).then(results => {
     const allUsersTrips = results[1].trips;
     const tripsDestinations = results[2].destinations;
+    usersData.destinations = tripsDestinations
     // usersData.travelers = results[0]
     usersData.trips = filteredTrips(currentTraveler.id, allUsersTrips);
-    usersData.destinations = results[2];
-    const __ = calculateTripsCost(usersData.trips.all, tripsDestinations);
-    console.log(usersData);
+    // console.log('turing', usersData.trips)
+    // usersData.destinations = results[2];
+    // currentTravelerTrips = usersData.trips.all;
+    const tripsCost = calculateTripsCost(usersData.trips.all, tripsDestinations);
+    // console.log(usersData);
+    // displayCost(tripsCost)
+    // displayCards()
     // currentTravelerTrips = usersTrip(currentTraveler.id, usersData.trips)
-    // cards(currentTravelerTrips)
+    // displayTripCards(usersData.trips.all, tripsDestinations)
+    // console.log('dest', tripsDestinations)
+    displayUsersName(usersData.user)
+    setDestinationDropDown(usersData.destinations)
     // usersDestination(trips, destinations)
   });
 });
+
+export function setDestinationDropDown(dest) {
+  return dest.map(location => {
+   return deskDrop.innerHTML +=  `
+   <option value="${location.destination}">${location.destination}</option>
+   `
+  })
+ }
+
+
 console.log('This is the JavaScript entry file - your code begins here.');

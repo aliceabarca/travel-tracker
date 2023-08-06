@@ -1,35 +1,46 @@
-import { usersData } from "../src/scripts";
-import { filteredTrips, calculateTripsCost } from "../src/travelData";
+import {
+  totalSpentThisYear,
+  usersData,
+  currentTravelerTrips,
+  cardContainer,
+} from '../src/scripts';
+import { filteredTrips, calculateTripsCost } from '../src/travelData';
 
+export function displayTripCards(trips, destinations) {
+  cardContainer.innerHTML = ''
 
-export function cards(trips, destination) {
-  const cardContainer = document.querySelector('.card-container');
+  trips.forEach(trip => {
+    const destination = destinations.filter(dest => {
+      return trip.destinationID === dest.id;
+    });
+    console.log('turing', destination)
+    return (cardContainer.innerHTML += `<section class="box-container">${destination[0].destination}
+  <img class="trip-image" src="${destination[0].image}">
+  <section class="date-trips">${trip.date}</section>
+  </section>`);
+  });
+}
+
+export function displayUsersName(traveler) {
+  const greeting = document.querySelector('.greeting');
+  const usersFirstName = usersData.user.name.split(' ')[0];
+  greeting.innerText = `Welcome, ${usersFirstName}!`;
+}
+
+export function displayCards() {
+  const trips = usersData.trips.all;
+
+  const destination = usersData.destinations;
+
+  const { pastTrips, upcomingTrips } = filteredTrips(trips, destination);
   cardContainer.innerHTML = '';
-  let tripCards = '';
-    trips.forEach(trip => {
-  cardContainer.innerHTML += `<div class="box-container">
-  <div class="image">
-  <img class="trip-image" src="${trip.destinations.image}"
-  <section class="trips-destination">${usersData.destinations}</section>
-  <section class="date-trips">${currentTravelTrips}</section>
-  </div>`
-    })
+
+  showTrips.forEach(trip => {
+    const card = displayTripCards(trip);
+    cardContainer.appendChild(card);
+  });
 }
 
-export function formatDate(date) {
-  let fullDate = new Date(date).toDateString();
-  return fullDate;
+export function displayCost(tripsCost) {
+  totalSpentThisYear.innerHTML = `${tripsCost}`;
 }
-
-export function usersDestination(trips, destinations) {
-  const allInfo = trips.map(trip => {
-    let findDestination = destinations.find(destination => destination.id === trip.destination)
-    return {
-      name: findDestination.destination,
-      image: findDestination.image,
-      travelers: trip.travelers
-    }
-  })
-  console.log('mad', allInfo)
-  return allInfo
-} 
