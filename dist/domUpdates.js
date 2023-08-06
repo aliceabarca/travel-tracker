@@ -27,20 +27,6 @@ export function displayUsersName(traveler) {
   greeting.innerText = `Welcome, ${usersFirstName}!`;
 }
 
-export function displayCards() {
-  const trips = usersData.trips.all;
-
-  const destination = usersData.destinations;
-
-  const { pastTrips, upcomingTrips } = filteredTrips(trips, destination);
-  cardContainer.innerHTML = '';
-
-  showTrips.forEach(trip => {
-    const card = displayTripCards(trip);
-    cardContainer.appendChild(card);
-  });
-}
-
 export function displayCost(tripsCost) {
   totalSpentThisYear.innerHTML = `${tripsCost}`;
 }
