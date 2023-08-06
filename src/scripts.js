@@ -22,6 +22,7 @@ let currentTraveler = {
 }
 
 let currentTravelerTrips;
+export let travelFeePrecentage = 0.10;
 
 export const usersData = {
   user: null,
@@ -31,7 +32,6 @@ export const usersData = {
     past: [],
     pending: [],
     upcoming: [],
-    tripsThisYear: [],
   },
   destinations: []
 }

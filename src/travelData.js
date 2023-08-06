@@ -1,5 +1,6 @@
+import { travelFeePrecentage } from "./scripts";
+
 export function filteredTrips(userId, allTrips) {
-  // rename function later
   const userTrips = allTrips.filter(trip => {
     return trip.userID === userId
   });
@@ -35,14 +36,9 @@ export function calculateTripsCost(usersTrip, destinations) {
     const tripYear = new Date(trip.date).getFullYear();
     return tripYear === currentYear
   })
-  // set a varible called thisYearsTrips and iterate through usersTrip
-  // check if the trip occured within this year
-  // hint: will have to leverage new Date().getTime()
-  // hard part: is a conditional between two dates (google!)
 
   let costOfAllTrips = 0;
 
-  // will use thisYearsTrips instead of usersTrip here
   thisYearsTrips.forEach(trip => {
     const destID = trip.destinationID
     const duration = trip.duration
@@ -58,11 +54,7 @@ export function calculateTripsCost(usersTrip, destinations) {
     })
   })
 
+  const agentsFee = costOfAllTrips * travelFeePrecentage
 
-  // now that we have the costOfAllTrips
-  // costOfAllTrips should incur that 10% free on top
-  // so costofAllTrips += //some math to calculate 10% of costOfAllTrips
-console.log('hello', costOfAllTrips)
-
-  return costOfAllTrips
+  return agentsFee
 }
