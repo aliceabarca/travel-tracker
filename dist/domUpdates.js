@@ -1,15 +1,12 @@
 import { usersData } from "../src/scripts";
+import { filteredTrips, calculateTripsCost } from "../src/travelData";
 
 
 export function cards(trips, destination) {
-  console.log('hello', trips)
-  console.log('babes', destination)
   const cardContainer = document.querySelector('.card-container');
   cardContainer.innerHTML = '';
   let tripCards = '';
     trips.forEach(trip => {
-    console.log('hello', trip.destinations)
-    // console.log('bitch', trips)
   cardContainer.innerHTML += `<div class="box-container">
   <div class="image">
   <img class="trip-image" src="${trip.destinations.image}"
