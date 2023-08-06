@@ -5,9 +5,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Webpack Starter Kit</title>
+  <link type="text/css" href="src/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;900&family=Roboto:wght@300&display=swap" rel="stylesheet">
+<img src="./images/bikes.jpg">
 </head>
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo">
+  <header>
+  <div class="travel-view">
+    <div class="left">
+      <h1 class="greeting">Welcome, User!</h1>
+    </div>
+    <div class="right">
+      <h2 id="spending">Total Spent: </h2>
+    </div>
+  </header>
+  <section class="trip">
+    <h3 id="book-trip-header">BOOK A TRIP</h3>
+    <div class="booking">
+      <label for="start-date">Start Date:
+        <input required type="date" id="start" name="trip-start" min="2000-01-01" max="2035-12-31">
+      </label>
+      <label for="trips-duration">Duration (days):
+        <input required class="trips-duration" type="number" min="1">
+      </label>
+      <label for="number-of-travelers">Number of Travelers:
+        <input required class="number-of-travelers" type="number" min="1">
+      </label>
+      <label for="drop">Choose a Destination:
+        <select required class="drop" id="destination-drop">
+          <option value="0">Choose a Destination</option>
+        </select>
+      </label>
+    </div>
+  </section>
+  </div>
   
   <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
   <script src="bundle.js"></script>
