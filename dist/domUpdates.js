@@ -3,12 +3,13 @@ import {
   usersData,
   currentTravelerTrips,
   cardContainer,
-  travelFeePrecentage,
+  travelFeePercentage,
 } from '../src/scripts';
 import { filteredTrips, calculateTripsCost } from '../src/travelData';
+import { setApiData } from './api';
 
 export function displayTripCards(trips, destinations) {
-  cardContainer.innerHTML = ''
+  cardContainer.innerHTML = '';
 
   trips.forEach(trip => {
     const destination = destinations.filter(dest => {
@@ -29,11 +30,13 @@ export function displayUsersName(traveler) {
 
 export function estimatedCostForNewTrip(duration, travelers, destination) {
   if (duration && travelers && destination) {
-    return `$${
-      ((destination.estimatedLodgingCostPerDate * duration) + (destination.estimatedFlightCostPerPerson * travelers) * travelFeePrecentage).toFixed(2)
-    }`
+    console.log(duration, travelers, destination)
+    return `$${(
+  ((destination.estimatedLodgingCostPerDay * duration) +
+      (destination.estimatedFlightCostPerPerson * travelers)) * travelFeePercentage
+    ).toFixed(2)}`;
   } else {
-    return `PLEASE FILL EVERYTHING OUT `
+    return `PLEASE FILL EVERYTHING OUT`;
     // grab querry selector and remove class list of hidden from errormessage
   }
 }

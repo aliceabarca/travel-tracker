@@ -8,10 +8,19 @@ import './css/styles.css';
 import './images/turing-logo.png';
 import './images/bikes.jpg';
 
-import { arrFetch } from '../dist/api';
+import { arrFetch, setApiData } from '../dist/api';
 
 import { calculateTripsCost, filteredTrips } from './travelData';
-import { displayCards, displayCost, displayPastTrips, displayPendingTrips, displayTripCards, displayUsersName, estimatedCostForNewTrip, usersDestination } from '../dist/domUpdates';
+import {
+  displayCards,
+  displayCost,
+  displayPastTrips,
+  displayPendingTrips,
+  displayTripCards,
+  displayUsersName,
+  estimatedCostForNewTrip,
+  usersDestination,
+} from '../dist/domUpdates';
 
 // query selector
 // export const estimatedCostButton = document.getElementById('est-cost');
@@ -19,14 +28,35 @@ export const upcomingTripsButton = document.getElementById('upcoming');
 export const pendingTripsButton = document.getElementById('pending');
 export const pastTripsButton = document.getElementById('past');
 export const totalSpentThisYear = document.getElementById('spent-this-year');
-export const cardContainer = document.querySelector('.card-container')
-export const deskDrop = document.querySelector('#destination-drop')
-export const errorMessage = document.querySelector('.error-message')
-export const travelers = document.querySelector('.number-of-travelers')
-export const durationOfTrip = document.querySelector('.trips-duration')
-export const chooseDestination = document.querySelector('#destination-drop')
-const estimatedCost = document.querySelector('.estimate-cost')
+export const cardContainer = document.querySelector('.card-container');
+export const destDrop = document.querySelector('#destination-drop');
+export const errorMessage = document.querySelector('.error-message');
+export const travelersSum = document.querySelector('.number-of-travelers');
+export const durationOfTrip = document.querySelector('.trips-duration');
+export const estimatedCost = document.querySelector('.estimate-cost');
+export const startDate = document.querySelector('.start-date');
+export const submitButton = document.querySelector('.sub-button');
 // add event listeners
+console.log(startDate.value)
+
+submitButton.addEventListener('click', () => {
+  const local = usersData.destinations.find(dest => {
+   return destDrop.value === dest.destination
+  })
+
+  setApiData(
+    Date.now(),
+    usersData.user.id,
+    local.id,
+    parseInt(travelersSum.value),
+    (startDate.value).replaceAll('-', '/'),
+    parseInt(durationOfTrip.value),
+    'pending',
+    [],
+    )
+    .then(response => renderFetch(response))
+    // .then(data => renderFetch(data));
+});
 
 // upcomingTripsButton.addEventListener('click', () => {
 //   pastTripsButton.classList.add('active')
@@ -35,48 +65,55 @@ const estimatedCost = document.querySelector('.estimate-cost')
 //   displayCards()
 // });
 pendingTripsButton.addEventListener('click', () => {
-  displayTripCards(usersData.trips.pending, usersData.destinations)
-  // console.log('destination', usersData.destinations)
+  displayTripCards(usersData.trips.pending, usersData.destinations);
 });
 pastTripsButton.addEventListener('click', () => {
-  displayTripCards(usersData.trips.past, usersData.destinations)
+  displayTripCards(usersData.trips.past, usersData.destinations);
 });
 
-deskDrop.addEventListener('change', () => {
-  estimatedCost.innerHTML = `${estimatedCostForNewTrip(durationOfTrip.value, Number(travelers.value), usersData.destinations.find(destination => {
-    return destination.destinations === chooseDestination.value
-  }))}`
-  
-})
+destDrop.addEventListener('change', () => {
+  estimatedCost.innerText = `Estimated Cost: ${estimatedCostForNewTrip(
+    parseInt(durationOfTrip.value),
+    parseInt(travelersSum.value),
+    usersData.destinations.find(destination => {
+      // console.log('hello', destination);
+      return destination.destination === destDrop.value;
+    }),
+  )}`;
+});
 
-
-travelers.addEventListener('change', () => {
-  estimatedCost.innerHTML = `${estimatedCostForNewTrip(durationOfTrip.value, Number(travelers.value), usersData.destinations.find(destination => {
-    return destination.destinations === chooseDestination.value
-  }))}`
-  
-})
-
+travelersSum.addEventListener('change', () => {
+  estimatedCost.innerText = `Estimated Cost: ${estimatedCostForNewTrip(
+    parseInt(durationOfTrip.value),
+    parseInt(travelersSum.value),
+    usersData.destinations.find(destination => {
+      return destination.destination === destDrop.value;
+    }),
+  )}`;
+});
 
 durationOfTrip.addEventListener('change', () => {
-  estimatedCost.innerHTML = `${estimatedCostForNewTrip(durationOfTrip.value, Number(travelers.value), usersData.destinations.find(destination => {
-    return destination.destinations === chooseDestination.value
-  }))}`
-  
-})
-
-
+  console.log('hello', durationOfTrip.value, parseInt(travelersSum.value),  usersData.destinations.find(destination => {
+    // console.log( destination.destination, destDrop.value)
+    return destination.destination === destDrop.value;
+  }))
+  estimatedCost.innerText = `Estimated Cost: ${estimatedCostForNewTrip(
+    parseInt(durationOfTrip.value),
+    parseInt(travelersSum.value),
+    usersData.destinations.find(destination => {
+      // console.log( destination.destination, destDrop.value)
+     return destination.destination === destDrop.value;
+    }),
+  )}`;
+});
 
 // global
 
-let currentTraveler = {
-  id: 30,
-  name: 'Rachael Vaughten',
-  travelerType: 'thrill-seeker',
-};
+let currentTraveler;
 
 let currentTravelerTrips;
-export let travelFeePrecentage = 1.1;
+
+export let travelFeePercentage = 1.1;
 
 export const usersData = {
   user: {
@@ -95,35 +132,42 @@ export const usersData = {
 };
 
 window.addEventListener('load', () => {
+  renderFetch();
+});
+
+function renderFetch() {
   Promise.all(arrFetch).then(results => {
     const allUsersTrips = results[1].trips;
     const tripsDestinations = results[2].destinations;
-    usersData.destinations = tripsDestinations
+    usersData.destinations = tripsDestinations;
     // usersData.travelers = results[0]
-    usersData.trips = filteredTrips(currentTraveler.id, allUsersTrips);
-    // console.log('turing', usersData.trips)
-    // usersData.destinations = results[2];
-    // currentTravelerTrips = usersData.trips.all;
-    const tripsCost = calculateTripsCost(usersData.trips.all, tripsDestinations);
-    // console.log(usersData);
-    // displayCost(tripsCost)
-    // displayCards()
-    // currentTravelerTrips = usersTrip(currentTraveler.id, usersData.trips)
-    // displayTripCards(usersData.trips.all, tripsDestinations)
-    // console.log('dest', tripsDestinations)
-    displayUsersName(usersData.user)
-    setDestinationDropDown(usersData.destinations)
-    // usersDestination(trips, destinations)
+    usersData.trips = filteredTrips(usersData.user.id, allUsersTrips);
+    const tripsCost = calculateTripsCost(
+      usersData.trips.all,
+      tripsDestinations,
+    );
+    displayUsersName(usersData.user);
+    setDestinationDropDown(usersData.destinations);
   });
-});
+}
 
 export function setDestinationDropDown(dest) {
   return dest.map(location => {
-   return deskDrop.innerHTML +=  `
+    return (destDrop.innerHTML += `
    <option value="${location.destination}">${location.destination}</option>
-   `
-  })
- }
-
+   `);
+  });
+}
 
 console.log('This is the JavaScript entry file - your code begins here.');
+
+// const postApi = {
+// id: id,
+// userID: userID,
+// destinationID: destinationID,
+// travelers: travelers,
+// date: date,
+// duration: duration,
+// status: status,
+// suggestedActivies: suggestedActivies
+// }
