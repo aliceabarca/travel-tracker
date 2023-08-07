@@ -1,5 +1,3 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.css';
@@ -36,27 +34,16 @@ export const durationOfTrip = document.querySelector('.trips-duration');
 export const estimatedCost = document.querySelector('.estimate-cost');
 export const startDate = document.querySelector('.start-date');
 export const submitButton = document.querySelector('.sub-button');
+
+export const bookingTrip = document.querySelector('.booking-trip')
+export const bookTripButton = document.querySelector('.book-trip')
 // add event listeners
-console.log(startDate.value)
 
 submitButton.addEventListener('click', () => {
-  const local = usersData.destinations.find(dest => {
-   return destDrop.value === dest.destination
-  })
-
-  setApiData(
-    Date.now(),
-    usersData.user.id,
-    local.id,
-    parseInt(travelersSum.value),
-    (startDate.value).replaceAll('-', '/'),
-    parseInt(durationOfTrip.value),
-    'pending',
-    [],
-    )
-    .then(response => renderFetch(response))
-    // .then(data => renderFetch(data));
+  apiFetchCall()
 });
+
+
 
 // upcomingTripsButton.addEventListener('click', () => {
 //   pastTripsButton.classList.add('active')
@@ -76,7 +63,6 @@ destDrop.addEventListener('change', () => {
     parseInt(durationOfTrip.value),
     parseInt(travelersSum.value),
     usersData.destinations.find(destination => {
-      // console.log('hello', destination);
       return destination.destination === destDrop.value;
     }),
   )}`;
@@ -94,14 +80,12 @@ travelersSum.addEventListener('change', () => {
 
 durationOfTrip.addEventListener('change', () => {
   console.log('hello', durationOfTrip.value, parseInt(travelersSum.value),  usersData.destinations.find(destination => {
-    // console.log( destination.destination, destDrop.value)
     return destination.destination === destDrop.value;
   }))
   estimatedCost.innerText = `Estimated Cost: ${estimatedCostForNewTrip(
     parseInt(durationOfTrip.value),
     parseInt(travelersSum.value),
     usersData.destinations.find(destination => {
-      // console.log( destination.destination, destDrop.value)
      return destination.destination === destDrop.value;
     }),
   )}`;
@@ -159,15 +143,23 @@ export function setDestinationDropDown(dest) {
   });
 }
 
-console.log('This is the JavaScript entry file - your code begins here.');
+export function apiFetchCall() {
+  const local = usersData.destinations.find(dest => {
+    return destDrop.value === dest.destination
+   })
+ 
+   setApiData(
+     Date.now(),
+     usersData.user.id,
+     local.id,
+     parseInt(travelersSum.value),
+     (startDate.value).replaceAll('-', '/'),
+     parseInt(durationOfTrip.value),
+     'pending',
+     [],
+     )
+     .then(response => console.log(response))
+     .then(renderFetch());
+}
 
-// const postApi = {
-// id: id,
-// userID: userID,
-// destinationID: destinationID,
-// travelers: travelers,
-// date: date,
-// duration: duration,
-// status: status,
-// suggestedActivies: suggestedActivies
-// }
+console.log('This is the JavaScript entry file - your code begins here.');
