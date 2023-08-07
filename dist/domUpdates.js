@@ -44,3 +44,14 @@ export function estimatedCostForNewTrip(duration, travelers, destination) {
 export function displayCost(tripsCost) {
   totalSpentThisYear.innerHTML = `${tripsCost}`;
 }
+
+export function displayNewTrip( destination, travelers, date, duration) {
+  // Date.now(),
+  // usersData.user.id,
+  // local.id,
+  // parseInt(travelersSum.value),
+  // (startDate.value).replaceAll('-', '/'),
+  // parseInt(durationOfTrip.value),
+  // 'pending',
+  // [],
+}
