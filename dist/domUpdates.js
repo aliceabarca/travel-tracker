@@ -54,3 +54,10 @@ export function displayNewTrip( destination, travelers, date, duration) {
   // 'pending',
   // [],
 }
+
+export function switchDisplay() {
+  const loginPage = document.querySelector('.login-page')
+  const travelPage = document.querySelector('.travel')
+  loginPage.classList.toggle('hidde') 
+  travelPage.classList.toggle('hidden')
+}
