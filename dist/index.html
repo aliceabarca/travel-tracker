@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;900&family=Roboto:wght@300&display=swap" rel="stylesheet">
-<img src="./images/bikes.jpg">
+<img alt="bike-image" src="./images/bikes.jpg">
 </head>
 <body>
   <header>
@@ -25,7 +25,7 @@
     <h3 id="book-trip-header">BOOK A TRIP</h3>
     <div class="booking">
       <label for="start-date">Start Date:
-        <input required type="date" id="start" name="trip-start" min="2000-01-01" max="2035-12-31">
+        <input required class="start-date" type="date" id="start" name="trip-start" min="2000-01-01" max="2035-12-31">
       </label>
       <label for="trips-duration">Duration (days):
         <input required class="trips-duration" type="number" min="1">
@@ -39,17 +39,23 @@
         </select>
       </label>
     </div>
-    <h4 class-="error-message hidden">Please select appropriate inputs!</h4>
-    <button class="estimate-cost">Calculate Estimated Cost</button>
+      <div class="submit-button">
+        <button class="sub-button">Submit</button>
+      </div>
+    <p id="est-cost" class="estimate-cost">Estimated Cost: </p>
   </section>
   <section class="trips">
     <div class="tabs">
       <button class="trip-buttons" id="upcoming">Upcoming Trips</button>
       <button class="trip-buttons" id="pending">Pending Trips</button>
       <button class="trip-buttons" id="past">Past Trips</button>
+      <p>Total Spent This Year: <span id="spent-this-year">0.00</span></p>
     </div>
-    <h5 id="trip-type">UPCOMING TRIPS</h5>
+    <h4 id="trip-type">UPCOMING TRIPS</h4>
     <div class="card-container"></div>
+    <div class="booking-trip">
+      <button class="book-trip hidden">BOOK TRIP</button>
+    </div>
   </section>
   </div>
   

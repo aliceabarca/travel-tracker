@@ -1,6 +1,9 @@
 import { travelFeePrecentage } from './scripts';
+import sampleData from '../test/sampleData';
+
 
 export function filteredTrips(userId, allTrips) {
+  console.log(allTrips)
   const userTrips = allTrips.filter(trip => {
     return trip.userID === userId;
   });
