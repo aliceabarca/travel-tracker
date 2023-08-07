@@ -37,7 +37,6 @@ export function estimatedCostForNewTrip(duration, travelers, destination) {
     ).toFixed(2)}`;
   } else {
     return `PLEASE FILL EVERYTHING OUT`;
-    // grab querry selector and remove class list of hidden from errormessage
   }
 }
 
