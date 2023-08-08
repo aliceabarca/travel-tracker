@@ -4,9 +4,13 @@ import {
   currentTravelerTrips,
   cardContainer,
   travelFeePercentage,
+  errorMessage,
+  usersPassword,
+  usersUsername,
+  allTravelers
 } from '../src/scripts';
 import { filteredTrips, calculateTripsCost } from '../src/travelData';
-import { setApiData } from './api';
+import { setApiData, fetchTrips } from './api';
 
 export function displayTripCards(trips, destinations) {
   cardContainer.innerHTML = '';
@@ -55,9 +59,41 @@ export function displayNewTrip( destination, travelers, date, duration) {
   // [],
 }
 
+// export function 
+
 export function switchDisplay() {
   const loginPage = document.querySelector('.login-page')
   const travelPage = document.querySelector('.travel')
-  loginPage.classList.toggle('hidde') 
+  loginPage.classList.toggle('hidden') 
   travelPage.classList.toggle('hidden')
+}
+export function loginUser() {
+  let travelId;
+  if (usersUsername.value.length > 8 && usersUsername.value.includes('traveler')) {
+    const num = usersUsername.value.replace('traveler', '')
+    travelId = parseInt(num)
+  } else {
+    errorMessage.classList.remove('hidden')
+  }
+
+  const checkTraveler = usersData.travelers.find(traveler => {
+    return traveler.id === travelId
+  })
+
+  if (!usersPassword.value === 'travel' || checkTraveler === undefined) {
+    errorMessage.classList.remove('hidden')
+  } else {
+    console.log('check check', checkTraveler)
+    errorMessage.classList.add('remove')
+    switchDisplay()
+    clearInputs()
+    usersData.user = checkTraveler
+  }
+  
+}
+
+
+export function clearInputs() {
+  usersUsername.input = ''
+  usersPassword.input = ''
 }

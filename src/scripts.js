@@ -7,7 +7,7 @@ import './images/turing-logo.png';
 import './images/zoom.jpg'
 import { arrFetch, setApiData } from '../dist/api';
 
-import { calculateTripsCost, filteredTrips } from './travelData';
+import { calculateTripsCost, checkTravelersId, filteredTrips, findTraveler } from './travelData';
 import {
   displayCards,
   displayCost,
@@ -17,6 +17,9 @@ import {
   displayUsersName,
   estimatedCostForNewTrip,
   usersDestination,
+  switchDisplay,
+  checkUsersCredentials,
+  loginUser,
 } from '../dist/domUpdates';
 
 // query selector
@@ -27,7 +30,6 @@ export const pastTripsButton = document.getElementById('past');
 export const totalSpentThisYear = document.getElementById('spent-this-year');
 export const cardContainer = document.querySelector('.card-container');
 export const destDrop = document.querySelector('#destination-drop');
-export const errorMessage = document.querySelector('.error-message');
 export const travelersSum = document.querySelector('.number-of-travelers');
 export const durationOfTrip = document.querySelector('.trips-duration');
 export const estimatedCost = document.querySelector('.estimate-cost');
@@ -36,7 +38,18 @@ export const submitButton = document.querySelector('.sub-button');
 
 export const bookingTrip = document.querySelector('.booking-trip')
 export const bookTripButton = document.querySelector('.book-trip')
+
+export const errorMessage = document.querySelector('.error-message');
+export const usersUsername = document.getElementById('username');
+export const usersPassword = document.getElementById('password');
+export const loginButton = document.querySelector('.login-button')
 // add event listeners
+
+loginButton.addEventListener('click', () => {
+
+  loginUser(usersData.user)
+  renderFetch()
+})
 
 submitButton.addEventListener('click', () => {
   apiFetchCall()
@@ -115,6 +128,7 @@ export const usersData = {
 };
 
 window.addEventListener('load', () => {
+
   renderFetch();
 });
 
@@ -122,15 +136,19 @@ function renderFetch() {
   Promise.all(arrFetch).then(results => {
     const allUsersTrips = results[1].trips;
     const tripsDestinations = results[2].destinations;
+    const allTravelers = results[0].travelers
+    usersData.travelers = allTravelers
+    // console.log(allTravelers)
     usersData.destinations = tripsDestinations;
-    // usersData.travelers = results[0]
+    // console.log('trav', usersData.travelers = results[0])
     usersData.trips = filteredTrips(usersData.user.id, allUsersTrips);
     const tripsCost = calculateTripsCost(
       usersData.trips.all,
       tripsDestinations,
-    );
-    displayUsersName(usersData.user);
-    setDestinationDropDown(usersData.destinations);
+      );
+      displayUsersName(usersData.user);
+      setDestinationDropDown(usersData.destinations);
+      checkTravelersId(usersData.user, allTravelers)
   });
 }
 
