@@ -1,14 +1,25 @@
 export default {
-  trips: {
-    id: 2,
-    name: 'Rachael Vaughten',
-    travelerType: 'thrill-seeker',
-    status: 'pending'
-  },
-  trips: {
-    id: 4,
-    name: 'Rachael Vaughten',
-    travelerType: 'thrill-seeker',
-    status: 'approved'
-  }
+  usersTrips: [
+    {
+      id:1,
+      userID:44,
+      destinationID:49,
+      travelers:1,
+      date:"2022/09/16",
+      duration:8,
+      status:"pending",
+      suggestedActivities:[]
+    },
+    {
+      id:1,
+      userID:48,
+      destinationID:49,
+      travelers:1,
+      date:"2022/09/16",
+      duration:8,
+      status:"approved",
+      suggestedActivities:[]
+    },
+  ]
+
 }

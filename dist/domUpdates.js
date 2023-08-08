@@ -9,8 +9,7 @@ import {
   usersUsername,
   allTravelers,
 } from '../src/scripts';
-import { filteredTrips, calculateTripsCost } from '../src/travelData';
-import { setApiData, fetchTrips } from './api';
+
 
 export function displayTripCards(trips, destinations) {
   cardContainer.innerHTML = '';
@@ -56,10 +55,7 @@ export function switchDisplay() {
 }
 export function loginUser() {
   let travelId;
-  if (
-    usersUsername.value.length > 8 &&
-    usersUsername.value.includes('traveler')
-  ) {
+  if (usersUsername.value.length > 8 && usersUsername.value.includes('traveler')) {
     const num = usersUsername.value.replace('traveler', '');
     travelId = parseInt(num);
   } else {
@@ -69,11 +65,13 @@ export function loginUser() {
   const checkTraveler = usersData.travelers.find(traveler => {
     return traveler.id === travelId;
   });
+  console.log('password', usersPassword.value)
+  console.log('traveler', checkTraveler)
 
-  if (!usersPassword.value === 'travel' || checkTraveler === undefined) {
+  if (usersPassword.value !== 'travel' || checkTraveler === undefined) {
     errorMessage.classList.remove('hidden');
   } else {
-    errorMessage.classList.add('remove');
+    errorMessage.classList.add('hidden');
     switchDisplay();
     clearInputs();
     usersData.user = checkTraveler;
