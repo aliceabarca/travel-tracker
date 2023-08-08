@@ -29,7 +29,7 @@ export function displayTripCards(trips, destinations) {
   });
 }
 
-export function displayUsersName(traveler) {
+export function displayUsersName() {
   const greeting = document.querySelector('.greeting');
   const usersFirstName = usersData.user.name.split(' ')[0];
   greeting.innerText = `Welcome, ${usersFirstName}!`;
