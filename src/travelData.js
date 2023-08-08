@@ -31,6 +31,7 @@ export function filteredTrips(userId, allTrips) {
 }
 
 export function calculateTripsCost(usersTrip, destinations) {
+  console.log('howdy', destinations)
   const currentYear = new Date().getFullYear();
 
   const thisYearsTrips = usersTrip.filter(trip => {

@@ -56,5 +56,13 @@ describe('trips', () => {
     const incorrectMessage = filteredTrips(1)
 
     expect(incorrectMessage).to.equal('Incorrect')
+  });
+})
+
+describe('calculate trips', () => {
+  it('should be a function', () => {
+    expect(typeof calculateTripsCost).to.equal('function')
   })
+
+  
 })
