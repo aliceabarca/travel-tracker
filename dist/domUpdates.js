@@ -4,9 +4,13 @@ import {
   currentTravelerTrips,
   cardContainer,
   travelFeePercentage,
+  errorMessage,
+  usersPassword,
+  usersUsername,
+  allTravelers,
 } from '../src/scripts';
 import { filteredTrips, calculateTripsCost } from '../src/travelData';
-import { setApiData } from './api';
+import { setApiData, fetchTrips } from './api';
 
 export function displayTripCards(trips, destinations) {
   cardContainer.innerHTML = '';
@@ -30,10 +34,10 @@ export function displayUsersName(traveler) {
 
 export function estimatedCostForNewTrip(duration, travelers, destination) {
   if (duration && travelers && destination) {
-    console.log(duration, travelers, destination)
     return `$${(
-  ((destination.estimatedLodgingCostPerDay * duration) +
-      (destination.estimatedFlightCostPerPerson * travelers)) * travelFeePercentage
+      (destination.estimatedLodgingCostPerDay * duration +
+        destination.estimatedFlightCostPerPerson * travelers) *
+      travelFeePercentage
     ).toFixed(2)}`;
   } else {
     return `PLEASE FILL EVERYTHING OUT`;
@@ -44,13 +48,39 @@ export function displayCost(tripsCost) {
   totalSpentThisYear.innerHTML = `${tripsCost}`;
 }
 
-export function displayNewTrip( destination, travelers, date, duration) {
-  // Date.now(),
-  // usersData.user.id,
-  // local.id,
-  // parseInt(travelersSum.value),
-  // (startDate.value).replaceAll('-', '/'),
-  // parseInt(durationOfTrip.value),
-  // 'pending',
-  // [],
+export function switchDisplay() {
+  const loginPage = document.querySelector('.login-page');
+  const travelPage = document.querySelector('.travel');
+  loginPage.classList.toggle('hidden');
+  travelPage.classList.toggle('hidden');
+}
+export function loginUser() {
+  let travelId;
+  if (
+    usersUsername.value.length > 8 &&
+    usersUsername.value.includes('traveler')
+  ) {
+    const num = usersUsername.value.replace('traveler', '');
+    travelId = parseInt(num);
+  } else {
+    errorMessage.classList.remove('hidden');
+  }
+
+  const checkTraveler = usersData.travelers.find(traveler => {
+    return traveler.id === travelId;
+  });
+
+  if (!usersPassword.value === 'travel' || checkTraveler === undefined) {
+    errorMessage.classList.remove('hidden');
+  } else {
+    errorMessage.classList.add('remove');
+    switchDisplay();
+    clearInputs();
+    usersData.user = checkTraveler;
+  }
+}
+
+export function clearInputs() {
+  usersUsername.input = '';
+  usersPassword.input = '';
 }

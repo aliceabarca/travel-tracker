@@ -1,9 +1,6 @@
 import { travelFeePrecentage } from './scripts';
-import sampleData from '../test/sampleData';
-
 
 export function filteredTrips(userId, allTrips) {
-  console.log(allTrips)
   const userTrips = allTrips.filter(trip => {
     return trip.userID === userId;
   });
@@ -56,8 +53,7 @@ export function calculateTripsCost(usersTrip, destinations) {
       }
     });
   });
-
-  const agentsFee = costOfAllTrips * travelFeePrecentage;
+  const agentsFee = costOfAllTrips * 1.1;
 
   return agentsFee;
 }
