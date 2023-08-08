@@ -36,4 +36,25 @@ describe('trips', () => {
       suggestedActivities:[]
     }])
   })
+
+  it('should return users upcoming trips', () => {
+    const upcomingTrips = filteredTrips(13, sampleData.usersTrips)
+
+    expect(upcomingTrips.upcoming).to.deep.equal([    {
+      id:1,
+      userID:13,
+      destinationID:45,
+      travelers:1,
+      date:"2023/09/16",
+      duration:8,
+      status:"approved",
+      suggestedActivities:[]
+    }])
+  })
+
+  it('should return incorrect if users trips does not exist', () => {
+    const incorrectMessage = filteredTrips(1)
+
+    expect(incorrectMessage).to.equal('Incorrect')
+  })
 })

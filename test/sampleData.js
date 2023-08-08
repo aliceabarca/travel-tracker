@@ -20,6 +20,16 @@ export default {
       status:"approved",
       suggestedActivities:[]
     },
+    {
+      id:1,
+      userID:13,
+      destinationID:45,
+      travelers:1,
+      date:"2023/09/16",
+      duration:8,
+      status:"approved",
+      suggestedActivities:[]
+    },
   ]
 
 }

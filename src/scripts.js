@@ -111,11 +111,7 @@ let currentTravelerTrips;
 export let travelFeePercentage = 1.1;
 
 export const usersData = {
-  user: {
-    id: 2,
-    name: 'Rachael Vaughten',
-    travelerType: 'thrill-seeker',
-  },
+  user: {},
   travelers: [],
   trips: {
     all: [],

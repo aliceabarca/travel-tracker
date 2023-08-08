@@ -1,4 +1,7 @@
 export function filteredTrips(userId, allTrips) {
+  if (!userId || !allTrips) {
+    return 'Incorrect'
+  }
   const userTrips = allTrips.filter(trip => {
     return trip.userID === userId;
   });
