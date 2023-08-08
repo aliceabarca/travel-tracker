@@ -24,6 +24,7 @@ import {
   switchDisplay,
   checkUsersCredentials,
   loginUser,
+  clearSearch,
 } from '../dist/domUpdates';
 
 // query selector
@@ -56,6 +57,7 @@ loginButton.addEventListener('click', () => {
 
 submitButton.addEventListener('click', () => {
   apiFetchCall();
+  clearSearch();
 });
 
 upcomingTripsButton.addEventListener('click', () => {
@@ -135,6 +137,7 @@ function renderFetch() {
     const allTravelers = results[0].travelers;
     usersData.travelers = allTravelers;
     usersData.destinations = tripsDestinations;
+    usersData.trips = filteredTrips(usersData.user.id, allUsersTrips);
     const tripsCost = calculateTripsCost(
       usersData.trips.all,
       tripsDestinations,
@@ -174,6 +177,11 @@ export function apiFetchCall() {
     .then(data => {
       const allUsersTrips = data.trips;
       usersData.trips = filteredTrips(usersData.user.id, allUsersTrips);
+      const tripsCost = calculateTripsCost(
+        usersData.trips.all,
+        usersData.destinations,
+      );
+      displayCost(tripsCost);
       console.log('trips', allUsersTrips)
     })
   })

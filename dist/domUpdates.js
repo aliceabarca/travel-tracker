@@ -8,6 +8,10 @@ import {
   usersPassword,
   usersUsername,
   allTravelers,
+  durationOfTrip,
+  travelersSum,
+  startDate,
+  destDrop,
 } from '../src/scripts';
 
 
@@ -19,7 +23,7 @@ export function displayTripCards(trips, destinations) {
       return trip.destinationID === dest.id;
     });
     return (cardContainer.innerHTML += `<section class="box-container">${destination[0].destination}
-  <img class="trip-image" src="${destination[0].image}">
+  <img class="trip-image" src="${destination[0].image}" alt="${destination[0].alt}">
   <section class="date-trips">${trip.date}</section>
   </section>`);
   });
@@ -53,6 +57,7 @@ export function switchDisplay() {
   loginPage.classList.toggle('hidden');
   travelPage.classList.toggle('hidden');
 }
+
 export function loginUser() {
   let travelId;
   if (usersUsername.value.length > 8 && usersUsername.value.includes('traveler')) {
@@ -81,4 +86,11 @@ export function loginUser() {
 export function clearInputs() {
   usersUsername.input = '';
   usersPassword.input = '';
+}
+
+export function clearSearch() {
+  durationOfTrip.value = ''
+  travelersSum.value = ''
+  startDate.value = ''
+  destDrop.value = ''
 }
