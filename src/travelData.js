@@ -1,5 +1,3 @@
-import { travelFeePrecentage } from './scripts';
-
 export function filteredTrips(userId, allTrips) {
   const userTrips = allTrips.filter(trip => {
     return trip.userID === userId;
@@ -57,3 +55,4 @@ export function calculateTripsCost(usersTrip, destinations) {
 
   return agentsFee;
 }
+
