@@ -58,6 +58,10 @@ submitButton.addEventListener('click', () => {
   apiFetchCall();
 });
 
+upcomingTripsButton.addEventListener('click', () => {
+  displayTripCards(usersData.trips.upcoming, usersData.destinations);
+})
+
 pendingTripsButton.addEventListener('click', () => {
   displayTripCards(usersData.trips.pending, usersData.destinations);
 });
@@ -139,7 +143,6 @@ function renderFetch() {
     displayCost(tripsCost);
     displayUsersName(usersData.user);
     setDestinationDropDown(usersData.destinations);
-    checkTravelersId(usersData.user, allTravelers);
   });
 }
 
