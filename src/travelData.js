@@ -53,23 +53,7 @@ export function calculateTripsCost(usersTrip, destinations) {
       }
     });
   });
-
-  const agentsFee = costOfAllTrips * travelFeePrecentage;
+  const agentsFee = costOfAllTrips * 1.1;
 
   return agentsFee;
 }
-
-
-
-export function checkTravelersId(userId, allTrips) {
-  const checkingUser = allTrips.find(user => {
-    return user.userID === userId;
-  });
-}
-
-//   if (checkingUser === undefined) {
-//     return null
-//   } else {
-//     return true
-//   }
-// }
