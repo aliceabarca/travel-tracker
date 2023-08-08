@@ -138,6 +138,11 @@ function renderFetch() {
     usersData.travelers = allTravelers;
     usersData.destinations = tripsDestinations;
     usersData.trips = filteredTrips(usersData.user.id, allUsersTrips);
+    const tripsCost = calculateTripsCost(
+      usersData.trips.all,
+      tripsDestinations,
+    );
+    displayCost(tripsCost);
     displayUsersName(usersData.user);
     setDestinationDropDown(usersData.destinations);
     console.log('hell', allUsersTrips)
