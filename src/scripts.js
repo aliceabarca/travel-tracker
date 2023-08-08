@@ -4,7 +4,7 @@ import './css/styles.css';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png';
 import './images/zoom.jpg';
-import { arrFetch, setApiData } from '../dist/api';
+import { arrFetch, setApiData, singleRequest } from '../dist/api';
 
 import {
   calculateTripsCost,
@@ -135,7 +135,6 @@ function renderFetch() {
     const allTravelers = results[0].travelers;
     usersData.travelers = allTravelers;
     usersData.destinations = tripsDestinations;
-    usersData.trips = filteredTrips(usersData.user.id, allUsersTrips);
     const tripsCost = calculateTripsCost(
       usersData.trips.all,
       tripsDestinations,
@@ -143,6 +142,7 @@ function renderFetch() {
     displayCost(tripsCost);
     displayUsersName(usersData.user);
     setDestinationDropDown(usersData.destinations);
+    console.log('hell', allUsersTrips)
   });
 }
 
@@ -169,6 +169,12 @@ export function apiFetchCall() {
     'pending',
     [],
   )
-    .then(response => console.log(response))
-    .then(renderFetch());
+  .then(()=> {
+    singleRequest('http://localhost:3001/api/v1/trips')
+    .then(data => {
+      const allUsersTrips = data.trips;
+      usersData.trips = filteredTrips(usersData.user.id, allUsersTrips);
+      console.log('trips', allUsersTrips)
+    })
+  })
 }
