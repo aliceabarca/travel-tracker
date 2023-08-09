@@ -1,6 +1,6 @@
 export function filteredTrips(userId, allTrips) {
-  if (!userId || !allTrips) {
-    return 'Incorrect'
+  if (userId > 50) {
+    return 'No user found'
   }
   const userTrips = allTrips.filter(trip => {
     return trip.userID === userId;
@@ -31,7 +31,9 @@ export function filteredTrips(userId, allTrips) {
 }
 
 export function calculateTripsCost(usersTrip, destinations) {
-  console.log('howdy', destinations)
+  if (!usersTrip || !destinations) {
+    return 'Missing Information'
+  }
   const currentYear = new Date().getFullYear();
 
   const thisYearsTrips = usersTrip.filter(trip => {
