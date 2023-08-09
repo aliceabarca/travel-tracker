@@ -24,6 +24,8 @@ import {
   switchDisplay,
   checkUsersCredentials,
   loginUser,
+  clearSearch,
+  todaysDate,
 } from '../dist/domUpdates';
 
 // query selector
@@ -51,11 +53,13 @@ export const loginButton = document.querySelector('.login-button');
 // add event listeners
 loginButton.addEventListener('click', () => {
   loginUser(usersData.user);
-  renderFetch();
+  renderFetch()
+
 });
 
 submitButton.addEventListener('click', () => {
   apiFetchCall();
+  clearSearch();
 });
 
 upcomingTripsButton.addEventListener('click', () => {
@@ -110,9 +114,9 @@ export let travelFeePercentage = 1.1;
 
 export const usersData = {
   user: {
-    id: 2,
-    name: 'Rachael Vaughten',
-    travelerType: 'thrill-seeker',
+    id: '',
+    name: '',
+    travelerType: ''
   },
   travelers: [],
   trips: {
@@ -135,14 +139,12 @@ function renderFetch() {
     const allTravelers = results[0].travelers;
     usersData.travelers = allTravelers;
     usersData.destinations = tripsDestinations;
-    const tripsCost = calculateTripsCost(
-      usersData.trips.all,
-      tripsDestinations,
-    );
+    usersData.trips = filteredTrips(usersData.user.id, allUsersTrips);
+    todaysDate()
+    const tripsCost = calculateTripsCost(usersData.trips.all, tripsDestinations);
     displayCost(tripsCost);
     displayUsersName(usersData.user);
     setDestinationDropDown(usersData.destinations);
-    console.log('hell', allUsersTrips)
   });
 }
 
@@ -174,7 +176,11 @@ export function apiFetchCall() {
     .then(data => {
       const allUsersTrips = data.trips;
       usersData.trips = filteredTrips(usersData.user.id, allUsersTrips);
-      console.log('trips', allUsersTrips)
+      const tripsCost = calculateTripsCost(
+        usersData.trips.all,
+        usersData.destinations,
+      );
+      displayCost(tripsCost);
     })
   })
 }

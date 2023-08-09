@@ -8,6 +8,10 @@ import {
   usersPassword,
   usersUsername,
   allTravelers,
+  durationOfTrip,
+  travelersSum,
+  startDate,
+  destDrop,
 } from '../src/scripts';
 
 
@@ -19,13 +23,13 @@ export function displayTripCards(trips, destinations) {
       return trip.destinationID === dest.id;
     });
     return (cardContainer.innerHTML += `<section class="box-container">${destination[0].destination}
-  <img class="trip-image" src="${destination[0].image}">
+  <img class="trip-image" src="${destination[0].image}" alt="${destination[0].alt}">
   <section class="date-trips">${trip.date}</section>
   </section>`);
   });
 }
 
-export function displayUsersName(traveler) {
+export function displayUsersName() {
   const greeting = document.querySelector('.greeting');
   const usersFirstName = usersData.user.name.split(' ')[0];
   greeting.innerText = `Welcome, ${usersFirstName}!`;
@@ -53,6 +57,7 @@ export function switchDisplay() {
   loginPage.classList.toggle('hidden');
   travelPage.classList.toggle('hidden');
 }
+
 export function loginUser() {
   let travelId;
   if (usersUsername.value.length > 8 && usersUsername.value.includes('traveler')) {
@@ -65,8 +70,6 @@ export function loginUser() {
   const checkTraveler = usersData.travelers.find(traveler => {
     return traveler.id === travelId;
   });
-  console.log('password', usersPassword.value)
-  console.log('traveler', checkTraveler)
 
   if (usersPassword.value !== 'travel' || checkTraveler === undefined) {
     errorMessage.classList.remove('hidden');
@@ -81,4 +84,16 @@ export function loginUser() {
 export function clearInputs() {
   usersUsername.input = '';
   usersPassword.input = '';
+}
+
+export function todaysDate() {
+  const todaysDate = new Date().toISOString().split("T")[0];
+  startDate.min = todaysDate;
+}
+
+export function clearSearch() {
+  durationOfTrip.value = ''
+  travelersSum.value = ''
+  startDate.value = ''
+  destDrop.value = ''
 }

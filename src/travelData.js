@@ -1,4 +1,7 @@
 export function filteredTrips(userId, allTrips) {
+  if (userId > 50) {
+    return 'No user found'
+  }
   const userTrips = allTrips.filter(trip => {
     return trip.userID === userId;
   });
@@ -28,6 +31,9 @@ export function filteredTrips(userId, allTrips) {
 }
 
 export function calculateTripsCost(usersTrip, destinations) {
+  if (!usersTrip || !destinations) {
+    return 'Missing Information'
+  }
   const currentYear = new Date().getFullYear();
 
   const thisYearsTrips = usersTrip.filter(trip => {
@@ -40,10 +46,11 @@ export function calculateTripsCost(usersTrip, destinations) {
   thisYearsTrips.forEach(trip => {
     const destID = trip.destinationID;
     const duration = trip.duration;
+    const travelers = trip.travelers
 
     destinations.forEach(location => {
       const costPerDay = location.estimatedLodgingCostPerDay;
-      const flightCost = location.estimatedFlightCostPerPerson;
+      const flightCost = location.estimatedFlightCostPerPerson * travelers
       if (destID === location.id) {
         const travelCost = costPerDay * duration;
         const cost = travelCost + flightCost;
@@ -53,6 +60,6 @@ export function calculateTripsCost(usersTrip, destinations) {
   });
   const agentsFee = costOfAllTrips * 1.1;
 
-  return agentsFee;
+  return agentsFee.toFixed(2);
 }
 
