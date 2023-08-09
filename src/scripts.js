@@ -25,6 +25,7 @@ import {
   checkUsersCredentials,
   loginUser,
   clearSearch,
+  todaysDate,
 } from '../dist/domUpdates';
 
 // query selector
@@ -52,7 +53,8 @@ export const loginButton = document.querySelector('.login-button');
 // add event listeners
 loginButton.addEventListener('click', () => {
   loginUser(usersData.user);
-  renderFetch();
+  renderFetch()
+
 });
 
 submitButton.addEventListener('click', () => {
@@ -132,20 +134,18 @@ window.addEventListener('load', () => {
 
 function renderFetch() {
   Promise.all(arrFetch).then(results => {
+    console.log(usersData)
     const allUsersTrips = results[1].trips;
     const tripsDestinations = results[2].destinations;
     const allTravelers = results[0].travelers;
     usersData.travelers = allTravelers;
     usersData.destinations = tripsDestinations;
     usersData.trips = filteredTrips(usersData.user.id, allUsersTrips);
-    const tripsCost = calculateTripsCost(
-      usersData.trips.all,
-      tripsDestinations,
-    );
+    todaysDate()
+    const tripsCost = calculateTripsCost(usersData.trips.all, tripsDestinations);
     displayCost(tripsCost);
     displayUsersName(usersData.user);
     setDestinationDropDown(usersData.destinations);
-    console.log('hell', allUsersTrips)
   });
 }
 
@@ -182,7 +182,6 @@ export function apiFetchCall() {
         usersData.destinations,
       );
       displayCost(tripsCost);
-      console.log('trips', allUsersTrips)
     })
   })
 }
