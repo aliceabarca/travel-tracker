@@ -70,8 +70,6 @@ export function loginUser() {
   const checkTraveler = usersData.travelers.find(traveler => {
     return traveler.id === travelId;
   });
-  console.log('password', usersPassword.value)
-  console.log('traveler', checkTraveler)
 
   if (usersPassword.value !== 'travel' || checkTraveler === undefined) {
     errorMessage.classList.remove('hidden');
@@ -86,6 +84,11 @@ export function loginUser() {
 export function clearInputs() {
   usersUsername.input = '';
   usersPassword.input = '';
+}
+
+export function todaysDate() {
+  const todaysDate = new Date().toISOString().split("T")[0];
+  startDate.min = todaysDate;
 }
 
 export function clearSearch() {
