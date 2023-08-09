@@ -134,7 +134,6 @@ window.addEventListener('load', () => {
 
 function renderFetch() {
   Promise.all(arrFetch).then(results => {
-    console.log(usersData)
     const allUsersTrips = results[1].trips;
     const tripsDestinations = results[2].destinations;
     const allTravelers = results[0].travelers;
